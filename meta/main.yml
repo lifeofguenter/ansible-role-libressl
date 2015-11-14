@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Gunter Grodotzki
+  description: Compile & install LibreSSL from source.
   company: weheartwebsites UG
   license: MIT
   min_ansible_version: 1.9

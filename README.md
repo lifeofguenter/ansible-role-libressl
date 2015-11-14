@@ -1,14 +1,25 @@
-Role Name
-=========
+# Ansible Role: LibreSSL
 
-Compile LibreSSL from source and install into a non-default path.
+An Ansible role that compiles and installs LibreSSL 2.x from source on Ubuntu 14.04 (LTS)
 
-License
--------
+## Requirements
+
+-
+
+## Role Variables
+
+-
+
+## Dependencies
+
+-
+
+## Example Playbook
+
+    - hosts: webservers
+      roles:
+        - { role: lifeofguenter.libressl }
+
+## License
 
 MIT
-
-Author Information
-------------------
-
-Gunter Grodotzki
