@@ -1,0 +1,36 @@
+---
+- name: Install dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - make
+    - gcc
+
+- shell: /opt/libressl/bin/openssl version
+  register: libressl_current
+  ignore_errors: yes
+
+- name: Download source
+  get_url: url=http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{{ libressl_version }}.tar.gz dest=/tmp/libressl-{{ libressl_version }}.tar.gz
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+
+- name: Extract archive
+  command: chdir=/tmp/ tar xfz libressl-{{ libressl_version }}.tar.gz creates=/tmp/libressl-{{ libressl_version }}
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+
+- name: Make clean
+  command: chdir=/tmp/php-{{ libressl_version }} make clean
+  ignore_errors: yes
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+
+- name: Configure
+  command: chdir=/tmp/libressl-{{ libressl_version }} ./configure --prefix=/opt/libressl
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+
+- name: Make
+  command: chdir=/tmp/libressl-{{ libressl_version }} make
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+
+- name: Install
+  command: chdir=/tmp/libressl-{{ libressl_version }} make install
+  when: libressl_current != "LibreSSL {{ libressl_version }}"
+  become: yes
