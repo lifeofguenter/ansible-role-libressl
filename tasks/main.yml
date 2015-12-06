@@ -4,6 +4,7 @@
   with_items:
     - make
     - gcc
+  become: yes
 
 - shell: /opt/libressl/bin/openssl version
   register: libressl_current
