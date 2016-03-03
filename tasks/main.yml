@@ -4,6 +4,7 @@
   with_items:
     - make
     - gcc
+    - libc6-dev
   become: yes
 
 - shell: /opt/libressl/bin/openssl version
